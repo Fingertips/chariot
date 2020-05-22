@@ -1,12 +1,16 @@
 # Chariot
 
-Ruby wrapper for `os_signposts` used to record events and intervals and show them using Xcode Instruments.
+Ruby wrapper for `os_signpost` used to record events and intervals and show them using Xcode Instruments.
 
 ## Installation
 
 Install a recent version of Xcode either through the developer portal or the App Store. Once installed you can start Xcode Instruments through Xcode or you can find it at:
 
     /Applications/Xcode.app/Contents/Applications/Instruments.app
+
+Create a new template and add the `os_signpost` instrument. With a bit of searching you should be able to find your events there.
+
+To show useful information you will have to [create a custom instrument](https://help.apple.com/instruments/developer/mac/current/) and there is unfortunately not a lot of documentation out there.
 
 ## Usage
 
@@ -23,7 +27,7 @@ SUBSYSTEM = 'com.fngtps.yellow'
 Next we need to decide on a category and initialize a log for it. There is no overhead for creating logs other than memory allocation.
 
 ```ruby
-log = Chariot::Log.new(SUBSYSTEM, "Redis Connection")
+topic = Chariot::Topic.new(SUBSYSTEM, "Redis Connection")
 ```
 
 ### Events
@@ -31,7 +35,7 @@ log = Chariot::Log.new(SUBSYSTEM, "Redis Connection")
 You can either emit an event or record the start or end of an interval. These pieces of data will later be pieced together in Instruments. Let's look at an event first.
 
 ```ruby
-log.emit("Open")
+log.emit
 ```
 
 When you are emitting large volume of events it's slightly better for performance to create a topic.
